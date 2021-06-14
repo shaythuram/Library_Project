@@ -3,13 +3,13 @@ pragma solidity ^0.8.4;
 
 contract Library {
 
-    enum   availability  { available , unavailable } 
+    
 
     struct Title {
         string title;
         uint256 total;
         uint256 numloanedout;
-        availability state;
+
         mapping(address => bool) loaners;
         
     }
@@ -27,7 +27,7 @@ contract Library {
         newtitle.title = title;
         newtitle.total = total;
         newtitle.numloanedout=uint256(0);
-        newtitle.state = availability.available;
+
         // titles[TitleID] = newtitle; //commit to state variable
         return title_key;   //return new diceId
     }
@@ -35,8 +35,8 @@ contract Library {
     
     
     function gettitlestatus ( string memory title )  public view returns ( string memory   )  {
-         availability status = titles[title].state;
-         if (status == availability(0) ){
+
+         if (titles[title].numloanedout < titles[title].total ){
              return 'Title available';
          }
          else{
@@ -54,6 +54,7 @@ contract Library {
 
     function borrow ( string memory title )  public   {
         require(titles[title].numloanedout < titles[title].total);
+        
         titles[title].loaners[msg.sender]  = true;
         //  assert(msg.sender != address(this));
         titles[title].numloanedout++ ;
@@ -61,13 +62,3 @@ contract Library {
     }
 
 
-
-    function returnBook(string memory title) public {
-        
-        require(titles[title].loaners[msg.sender] );
-        titles[title].numloanedout--;
-        delete titles[title].loaners[msg.sender];
-    }
-
-
-}
