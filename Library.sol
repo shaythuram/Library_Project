@@ -3,15 +3,15 @@ pragma solidity ^0.8.4;
 
 contract Library {
 
-    enum   availability  { available , unavailable } 
+    
 
     struct Title {
         string title;
         uint256 total;
         uint256 numloanedout;
-        availability state;
-        mapping(address => bool) loaners;
 
+        mapping(address => uint256) loaners;
+        
     }
 
     // uint256 public numtitles = 0;
@@ -27,46 +27,48 @@ contract Library {
         newtitle.title = title;
         newtitle.total = total;
         newtitle.numloanedout=uint256(0);
-        newtitle.state = availability.available;
+
         // titles[TitleID] = newtitle; //commit to state variable
         return title_key;   //return new diceId
     }
-
-
-
+    
+    
+    
     function gettitlestatus ( string memory title )  public view returns ( string memory   )  {
-         availability status = titles[title].state;
-         if (status == availability(0) ){
+
+         if (titles[title].numloanedout < titles[title].total ){
              return 'Title available';
          }
          else{
             return 'Title unavailable'; 
          }
-
+         
     }
-
+    
     function getremainingnumofbooks ( string memory title )  public view returns ( uint256   )  {
-
+         
          uint256 remaining = titles[title].total - titles[title].numloanedout ;
          return remaining;
     }
-
+    
 
     function borrow ( string memory title )  public   {
         require(titles[title].numloanedout < titles[title].total);
-        titles[title].loaners[msg.sender]  = true;
+        
+        titles[title].loaners[msg.sender]++;
         //  assert(msg.sender != address(this));
         titles[title].numloanedout++ ;
-
+ 
     }
 
 
 
     function returnBook(string memory title) public {
-
-        require(titles[title].loaners[msg.sender] );
+        
+        require(titles[title].loaners[msg.sender] > 0 , 'You have not borrowed this title');
+        titles[title].loaners[msg.sender]--;
         titles[title].numloanedout--;
-        delete titles[title].loaners[msg.sender];
+        
     }
 
 
