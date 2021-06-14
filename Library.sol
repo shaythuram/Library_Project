@@ -60,5 +60,4 @@ contract Library {
         titles[title].numloanedout++ ;
  
     }
-
-
+}
