@@ -2,8 +2,8 @@
 
 Solidity Contract Functions :
 
-addbook :  Add a book with a given title and set the total number of said books in circulation.
-gettitlestatus: Check if Title is availbel to be borrowed.
-getremainingnumofbooks : Check how many books of said title remains.
-Borrow : Borrow Book.
-Return : Return Book.
+addbook :  Add a book with a given title and set the total number of said books in circulation.<br>
+gettitlestatus: Check if title is available to be borrowed.<br>
+getremainingnumofbooks : Check how many books of said title remains.<br>
+Borrow : Borrow Book.<br><br>
+Return : Return Book.<br>
