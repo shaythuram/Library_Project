@@ -9,13 +9,15 @@ contract Library {
         string title;
         uint256 total;
         uint256 numloanedout;
-
         mapping(address => uint256) loaners;
-        
     }
+    
+    
+    
 
     // uint256 public numtitles = 0;
     mapping(string  => Title) public titles;
+    string[]  public catalogue ;
 
     function addbook( uint256 total , string memory title  ) public payable returns (string memory)  {
         // How to require isbn length == 13 ??
@@ -29,6 +31,7 @@ contract Library {
         newtitle.numloanedout=uint256(0);
 
         // titles[TitleID] = newtitle; //commit to state variable
+        catalogue.push(title);
         return title_key;   //return new diceId
     }
     
@@ -53,10 +56,9 @@ contract Library {
     
 
     function borrow ( string memory title )  public   {
-        require(titles[title].numloanedout < titles[title].total);
+        require(titles[title].numloanedout < titles[title].total , 'This title is currently unavailable' );
         
         titles[title].loaners[msg.sender]++;
-        //  assert(msg.sender != address(this));
         titles[title].numloanedout++ ;
  
     }
@@ -64,12 +66,17 @@ contract Library {
 
 
     function returnBook(string memory title) public {
-        
         require(titles[title].loaners[msg.sender] > 0 , 'You have not borrowed this title');
         titles[title].loaners[msg.sender]--;
         titles[title].numloanedout--;
-        
     }
+
+
+    function returnCatalogue() public view returns (string[] memory) {
+        
+        return catalogue;
+    }
+
 
 
 }
