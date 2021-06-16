@@ -7,3 +7,4 @@ gettitlestatus: Check if title is available to be borrowed.<br>
 getremainingnumofbooks : Check how many books of said title remains.<br>
 Borrow : Borrow Book.<br>
 Return : Return Book.<br>
+returnCatalogue : List books in library , returns an array of titles. 
