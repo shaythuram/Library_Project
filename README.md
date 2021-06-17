@@ -7,4 +7,7 @@ gettitlestatus: Check if title is available to be borrowed.<br>
 getremainingnumofbooks : Check how many books of said title remains.<br>
 Borrow : Borrow Book.<br>
 Return : Return Book.<br>
-returnCatalogue : List books in library , returns an array of titles. 
+
+returnCatalogue : List books in library , returns an array of titles. # Removed 
+
+listBooks : Returns a Struct Catlogue. Struct contains an array of strings and a bool called flag.  The flag is always  false so we can filter that out from the JS side with an if else clause.
