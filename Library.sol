@@ -12,12 +12,17 @@ contract Library {
         mapping(address => uint256) loaners;
     }
     
+    struct Catalogue{
+        string[] Catalogue_Array;
+        bool flag; // need to have this here if not line 19 mapping(uint256 +> Catlogue wont work)
+    } 
     
-    
+    mapping(uint256  => Catalogue) public booklist;
 
     // uint256 public numtitles = 0;
     mapping(string  => Title) public titles;
-    string[]  public catalogue ;
+    
+
 
     function addbook( uint256 total , string memory title  ) public payable returns (string memory)  {
         // How to require isbn length == 13 ??
@@ -29,9 +34,9 @@ contract Library {
         newtitle.title = title;
         newtitle.total = total;
         newtitle.numloanedout=uint256(0);
-
+        booklist[0].Catalogue_Array.push(title);
         // titles[TitleID] = newtitle; //commit to state variable
-        catalogue.push(title);
+
         return title_key;   //return new diceId
     }
     
@@ -72,11 +77,12 @@ contract Library {
     }
 
 
-    function returnCatalogue() public view returns (string[] memory) {
-        
-        return catalogue;
-    }
 
+    function listBooks() public view  returns ( Catalogue memory ) {
+        
+        return booklist[0];
+        
+    }
 
 
 }
